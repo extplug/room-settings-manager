@@ -1,0 +1,18 @@
+{
+  "name": "extplug-room-settings-manager",
+  "version": "0.0.0",
+  "license": "MIT",
+  "description": "Easily configure your room settings and style.",
+  "keywords": [
+    "extplug-plugin"
+  ],
+  "dependencies": {
+    "plug-auth-client": "^1.1.0"
+  },
+  "scripts": {
+    "build": "extplug bundle src/main.js build/room-settings-manager.js"
+  },
+  "devDependencies": {
+    "extplug-cli": "^1.0.0"
+  }
+}
