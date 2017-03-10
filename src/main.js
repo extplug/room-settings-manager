@@ -2,7 +2,7 @@ import currentRoom from 'plug/models/currentRoom'
 import Plugin from 'extplug/Plugin'
 import { authenticate, httpTransport } from 'plug-auth-client'
 
-const API_URL = 'http://localhost:3000'
+const API_URL = 'https://rs.extplug.com'
 
 const RoomSettingsManager = Plugin.extend({
   name: 'Room Settings Manager',
