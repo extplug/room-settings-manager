@@ -7,12 +7,13 @@
     "extplug-plugin"
   ],
   "dependencies": {
+    "bel": "^4.5.1",
     "plug-auth-client": "^1.1.0"
   },
   "scripts": {
     "build": "extplug bundle src/main.js build/room-settings-manager.js"
   },
   "devDependencies": {
-    "extplug-cli": "^1.0.0"
+    "extplug-cli": "^1.2.2"
   }
 }
