@@ -1,5 +1,7 @@
 import currentRoom from 'plug/models/currentRoom'
 import Plugin from 'extplug/Plugin'
+import style from './style.css'
+
 import RoomSettingsMenuViewOverride from './RoomSettingsMenuView'
 import RoomStylesView from './RoomStylesView'
 import RulesSettingsView from './RulesSettingsView'
@@ -8,6 +10,8 @@ import Storage from './Storage'
 const RoomSettingsManager = Plugin.extend({
   name: 'Room Settings Manager',
   description: 'Easily configure your room settings and style.',
+
+  style,
 
   enable () {
     const menu = new RoomSettingsMenuViewOverride()
@@ -27,7 +31,9 @@ const RoomSettingsManager = Plugin.extend({
         roomSettingsView.view = new RoomStylesView()
       }
       if (section === 'extplug-rules') {
-        roomSettingsView.view = new RulesSettingsView()
+        roomSettingsView.view = new RulesSettingsView({
+          roomSettings: this.ext.roomSettings
+        })
       }
 
       roomSettingsView.$el.append(roomSettingsView.view.$el)

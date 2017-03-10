@@ -1,0 +1,9 @@
+.extp-RulesSettingsView {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
+
+.extp-RulesSettingsView-option {
+  width: 33% !important;
+}
