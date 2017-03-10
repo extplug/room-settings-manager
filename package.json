@@ -8,6 +8,7 @@
   ],
   "dependencies": {
     "bel": "^4.5.1",
+    "codemirror": "^5.24.2",
     "on-load": "^3.2.0",
     "plug-auth-client": "^1.1.0",
     "yo-yoify": "^3.5.0"

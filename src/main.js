@@ -28,7 +28,9 @@ const RoomSettingsManager = Plugin.extend({
       roomSettingsView.section = section
 
       if (section === 'extplug-styles') {
-        roomSettingsView.view = new RoomStylesView()
+        roomSettingsView.view = new RoomStylesView({
+          roomSettings: this.ext.roomSettings
+        })
       }
       if (section === 'extplug-rules') {
         roomSettingsView.view = new RulesSettingsView({
@@ -64,18 +66,22 @@ const RoomSettingsManager = Plugin.extend({
     return this.storage
   },
 
-  save () {
+  saveSettings () {
     const myRoomSettings = {
       stub: true
     }
 
-    return this.getStorage().save(
+    return this.getStorage().saveSettings(
       currentRoom.get('slug'),
       myRoomSettings
     ).catch((err) => {
       console.error(err)
       throw err
     })
+  },
+
+  saveStyles () {
+    // TODO
   }
 })
 

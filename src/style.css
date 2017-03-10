@@ -1,1 +1,9 @@
+/* TODO Support resolving node modules normally in extplug-cli */
+@import '../node_modules/codemirror/lib/codemirror.css';
+@import '../node_modules/codemirror/theme/base16-dark.css';
+
 @import './RulesSettingsView.css';
+
+.CodeMirror {
+  height: 100%;
+}

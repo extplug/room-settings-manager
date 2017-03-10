@@ -9,7 +9,7 @@ export default class Storage {
     }).then((result) => result.token)
   }
 
-  save (room, settings) {
+  saveSettings (room, settings) {
     return this.token.then((token) =>
       fetch(`${API_URL}/${room}`, {
         method: 'PUT',
@@ -19,6 +19,20 @@ export default class Storage {
           'content-type': 'application/json'
         },
         body: JSON.stringify(settings)
+      })
+    )
+  }
+
+  saveStyles (room, cssText) {
+    return this.token.then((token) =>
+      fetch(`${API_URL}/${room}.css`, {
+        method: 'PUT',
+        headers: {
+          authorization: `JWT ${token}`,
+          accept: 'application/json',
+          'content-type': 'text/css'
+        },
+        body: cssText
       })
     )
   }
