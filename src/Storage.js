@@ -20,7 +20,7 @@ export default class Storage {
         },
         body: JSON.stringify(settings)
       })
-    )
+    ).then((response) => response.json())
   }
 
   saveStyles (room, cssText) {
@@ -34,6 +34,6 @@ export default class Storage {
         },
         body: cssText
       })
-    )
+    ).then((response) => response.json())
   }
 }

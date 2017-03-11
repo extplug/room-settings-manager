@@ -3,6 +3,7 @@
 @import '../node_modules/codemirror/theme/base16-dark.css';
 
 @import './RulesSettingsView.css';
+@import './RoomStylesView.css';
 
 .CodeMirror {
   height: 100%;
