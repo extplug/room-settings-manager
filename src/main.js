@@ -34,7 +34,8 @@ const RoomSettingsManager = Plugin.extend({
       }
       if (section === 'extplug-rules') {
         roomSettingsView.view = new RulesSettingsView({
-          roomSettings: this.ext.roomSettings
+          roomSettings: this.ext.roomSettings,
+          save: (fragment) => this.updateSettings(fragment)
         })
       }
 
@@ -66,14 +67,13 @@ const RoomSettingsManager = Plugin.extend({
     return this.storage
   },
 
-  saveSettings () {
-    const myRoomSettings = {
-      stub: true
-    }
+  updateSettings (fragment) {
+    const roomSettings = this.ext.roomSettings.toJSON()
+    Object.assign(roomSettings, fragment)
 
     return this.getStorage().saveSettings(
       currentRoom.get('slug'),
-      myRoomSettings
+      roomSettings
     ).catch((err) => {
       console.error(err)
       throw err

@@ -7,3 +7,23 @@
 .CodeMirror {
   height: 100%;
 }
+
+.extp-Button {
+  background: #282c35;
+  color: #808691;
+  font: 16px 'Open Sans', sans-serif;
+  cursor: pointer;
+  min-width: 200px;
+  max-width: 200px;
+  height: 39px;
+
+  &:hover {
+    background: #009cdd;
+    color: #eee;
+  }
+
+  &.is-negative:hover {
+    background: #f04f30;
+    color: #eee;
+  }
+}

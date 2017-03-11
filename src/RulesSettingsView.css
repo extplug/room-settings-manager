@@ -5,5 +5,19 @@
 }
 
 .extp-RulesSettingsView-option {
-  width: 33% !important;
+  width: calc(100% / 3) !important;
+  box-sizing: border-box;
+  padding: 0 10px;
+
+  & button {
+    width: 50% !important;
+  }
+  & .off {
+    margin-left: 0 !important;
+  }
+}
+
+.extp-RulesSettingsSaveLine {
+  margin-right: 10px;
+  text-align: right;
 }

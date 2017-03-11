@@ -1,4 +1,4 @@
-import { View } from 'backbone'
+import { Model, View } from 'backbone'
 import html from 'bel'
 import lang from 'lang/Lang'
 
@@ -29,49 +29,67 @@ function Switch ({ name, label, enabled, enable, disable }) {
 }
 
 export default View.extend({
-  className: 'extp-RulesSettingsView general-settings',
+  className: 'general-settings',
 
   initialize ({ roomSettings }) {
-    roomSettings.on('change', this.render, this)
+    this.rules = new Model(roomSettings.get('rules'))
+    this.rules.on('change', this.render, this)
+
+    roomSettings.on('change:rules', () => {
+      this.rules.set(roomSettings.get('rules'))
+    })
   },
 
   render () {
-    const { roomSettings } = this.options
-    const rules = roomSettings.get('rules')
-
     const switches = Object.entries(options).map(([ name, label ]) =>
       Switch({
         name,
         label,
-        enabled: rules[name],
+        enabled: this.rules.get(name),
         enable: () => this.enable(name),
         disable: () => this.disable(name)
       }))
 
-    this.$el.empty().append(...switches)
+    this.button = html`
+      <button class="extp-Button" onclick=${() => this.save()}>
+        Save
+      </button>
+    `
+
+    this.$el.empty().append(html`
+      <div class="extp-RulesSettingsView">
+        ${switches}
+      </div>
+    `, html`
+      <div class="extp-RulesSettingsSaveLine">
+        ${this.button}
+      </div>
+    `)
 
     return this
   },
 
   remove () {
-    this.options.roomSettings.off('change', this.render, this)
+    this.rules.off('change', this.render, this)
 
     return this._super()
   },
 
   enable (name) {
-    const { roomSettings } = this.options
-    roomSettings.set('rules', {
-      ...roomSettings.get('rules'),
-      [name]: true
-    })
+    this.rules.set(name, true)
   },
 
   disable (name) {
-    const { roomSettings } = this.options
-    roomSettings.set('rules', {
-      ...roomSettings.get('rules'),
-      [name]: false
+    this.rules.set(name, false)
+  },
+
+  save () {
+    this.button.setAttribute('disabled', 'disabled')
+
+    return this.options.save({
+      rules: this.rules.toJSON()
+    }).then(() => {
+      this.button.removeAttribute('disabled')
     })
   },
 
