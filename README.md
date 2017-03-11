@@ -1,6 +1,8 @@
 Room Settings Manager
 =====================
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/extplug/room-settings-manager.svg)](https://greenkeeper.io/)
+
 Easily configure your room settings and style.
 
 ## Installation
