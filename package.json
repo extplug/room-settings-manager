@@ -11,6 +11,8 @@
     "codemirror": "^5.24.2",
     "on-load": "^3.2.0",
     "plug-auth-client": "^1.1.0",
+    "sistyl": "^1.0.0",
+    "strip-indent": "1.0.1",
     "yo-yoify": "^3.5.0"
   },
   "scripts": {

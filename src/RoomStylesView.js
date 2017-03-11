@@ -1,7 +1,13 @@
 import { View } from 'backbone'
+import stripIndent from 'strip-indent'
 import currentRoom from 'plug/models/currentRoom'
 import request from 'extplug/util/request'
 import codemirror from './codemirror'
+import convertCssObject from './convertCssObject'
+
+const defaultText = stripIndent(`
+  /* Add your CSS here! */
+`)
 
 export default View.extend({
   className: 'general-settings',
@@ -9,21 +15,24 @@ export default View.extend({
   render () {
     const { roomSettings } = this.options
 
-    const imports = this.getImports()
     const rsImport = `https://rs.extplug.com/${currentRoom.get('slug')}.css`
 
-    if (imports.includes(rsImport)) {
-      request(rsImport)
-        .then(this.createEditor.bind(this))
-        .fail((err) => {
-          console.error(err.stack)
-          alert(err.message)
-        })
-    } else {
-      this.createEditor('')
-    }
+    fetch(rsImport).then((response) => response.text()).catch((err) => {
+      const css = roomSettings.get('css')
 
-    // TODO list editable imports
+      if (css != null && typeof css === 'object') {
+        return convertCssObject(css)
+      }
+
+      if (typeof css === 'string') {
+        // Auto-proxy using request util.
+        return request(css)
+      }
+
+      return defaultText
+    }).then((cssText) => {
+      this.createEditor(cssText)
+    })
 
     return this
   },
@@ -39,18 +48,5 @@ export default View.extend({
       lineNumbers: true,
       value: contents
     })
-  },
-
-  getImports () {
-    const css = this.options.roomSettings.get('css')
-    const imports = []
-    if (typeof css === 'string') {
-      imports.push(css)
-    }
-    if (typeof css === 'object' && Array.isArray(css.import)) {
-      imports.push(css.import)
-    }
-
-    return imports
   }
 })
