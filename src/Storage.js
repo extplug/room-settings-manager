@@ -2,6 +2,18 @@ import { authenticate, httpTransport } from 'plug-auth-client'
 
 const API_URL = 'https://rs.extplug.com'
 
+function rejectNonOK(response) {
+  if (response.ok) {
+    return response
+  }
+  return response.json().catch(() => null).then((json) => {
+    const error = new Error('An unknown error occurred.')
+    error.body = json
+    error.response = response
+    throw error;
+  })
+}
+
 export default class Storage {
   constructor ({ url = API_URL } = {}) {
     this.baseUrl = url
@@ -13,15 +25,18 @@ export default class Storage {
 
   getSettings (room) {
     return fetch(`${this.baseUrl}/${room}`)
+      .then(rejectNonOK)
       .then((response) => response.json())
   }
 
   getStyles (room) {
     return fetch(`${this.baseUrl}/${room}.css`)
+      .then(rejectNonOK)
       .then((response) => response.text())
   }
   getStylesSource (room) {
     return fetch(`${this.baseUrl}/${room}.css?source`)
+      .then(rejectNonOK)
       .then((response) => response.text())
   }
 
@@ -36,7 +51,9 @@ export default class Storage {
         },
         body: JSON.stringify(settings)
       })
-    ).then((response) => response.json())
+    )
+      .then(rejectNonOK)
+      .then((response) => response.json())
   }
 
   saveStyles (room, cssText) {
@@ -50,6 +67,8 @@ export default class Storage {
         },
         body: cssText
       })
-    ).then((response) => response.json())
+    )
+      .then(rejectNonOK)
+      .then((response) => response.json())
   }
 }
