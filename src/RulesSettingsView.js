@@ -33,9 +33,9 @@ export default View.extend({
 
   initialize ({ roomSettings }) {
     this.rules = new Model(roomSettings.get('rules'))
-    this.rules.on('change', this.render, this)
+    this.listenTo(this.rules, 'change', this.render)
 
-    roomSettings.on('change:rules', () => {
+    this.listenTo(roomSettings, 'change:rules', () => {
       this.rules.set(roomSettings.get('rules'))
     })
   },
@@ -67,12 +67,6 @@ export default View.extend({
     `)
 
     return this
-  },
-
-  remove () {
-    this.rules.off('change', this.render, this)
-
-    return this._super()
   },
 
   enable (name) {
