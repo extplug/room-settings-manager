@@ -6,6 +6,7 @@ import RoomSettingsMenuViewOverride from './RoomSettingsMenuView'
 import RoomStylesView from './RoomStylesView'
 import RulesSettingsView from './RulesSettingsView'
 import Storage from './Storage'
+import forceReload from './forceReload'
 
 const RoomSettingsManager = Plugin.extend({
   name: 'Room Settings Manager',
@@ -76,7 +77,7 @@ const RoomSettingsManager = Plugin.extend({
     return this.getStorage().saveSettings(
       currentRoom.get('slug'),
       roomSettings
-    ).catch((err) => {
+    ).then(forceReload).catch((err) => {
       console.error(err)
       throw err
     })
@@ -90,11 +91,12 @@ const RoomSettingsManager = Plugin.extend({
       currentRoom.get('slug'),
       styles
     ).then((result) => {
+      // Update the CSS URL in the room settings if necessary.
       if (this.ext.roomSettings.get('css') !== cssUrl) {
         return this.updateSettings({ css: cssUrl })
       }
       return result
-    }).catch((err) => {
+    }).then(forceReload).catch((err) => {
       console.error(err)
       throw err
     })
