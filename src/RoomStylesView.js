@@ -1,7 +1,9 @@
 import { View } from 'backbone'
 import stripIndent from 'strip-indent'
 import html from 'bel'
+import empty from 'empty-element'
 import currentRoom from 'plug/models/currentRoom'
+import SpinnerView from 'plug/views/spinner/SpinnerView'
 import request from 'extplug/util/request'
 import codemirror from './codemirror'
 import convertCssObject from './convertCssObject'
@@ -14,8 +16,14 @@ export default View.extend({
   className: 'general-settings extp-RoomStylesView',
 
   render () {
+    this.spinner = new SpinnerView({ size: SpinnerView.LARGE })
+
     this.wrapper = html`
-      <div class="extp-RoomStylesView-editor" />
+      <div class="extp-RoomStylesView-editor">
+        <div class="extp-RoomStylesView-loading">
+          ${this.spinner.el}
+        </div>
+      </div>
     `
 
     this.button = html`
@@ -29,6 +37,8 @@ export default View.extend({
         ${this.button}
       </div>
     `)
+
+    this.spinner.render()
 
     this.loadStyles().then((cssText) => {
       this.createEditor(cssText)
@@ -59,7 +69,7 @@ export default View.extend({
   },
 
   createEditor (contents) {
-    this.editor = codemirror(this.wrapper, {
+    this.editor = codemirror(empty(this.wrapper), {
       mode: 'css',
       theme: 'base16-dark',
       lineNumbers: true,
