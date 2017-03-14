@@ -42,11 +42,8 @@ export default View.extend({
   },
 
   loadStyles () {
-    const rsImport = `https://rs.extplug.com/${currentRoom.get('slug')}.css`
-    const { roomSettings } = this.options
-
-    return fetch(rsImport).then((response) => response.text()).catch((err) => {
-      const css = roomSettings.get('css')
+    return this.options.load().catch((err) => {
+      const css = this.options.roomSettings.get('css')
 
       if (css != null && typeof css === 'object') {
         return convertCssObject(css)

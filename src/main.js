@@ -30,6 +30,7 @@ const RoomSettingsManager = Plugin.extend({
       if (section === 'extplug-styles') {
         roomSettingsView.view = new RoomStylesView({
           roomSettings: this.ext.roomSettings,
+          load: () => this.getStorage().getStylesSource(currentRoom.get('slug')),
           save: (styles) => this.updateStyles(styles)
         })
       }
@@ -82,9 +83,10 @@ const RoomSettingsManager = Plugin.extend({
   },
 
   updateStyles (styles) {
-    const cssUrl = `https://rs.extplug.com/${currentRoom.get('slug')}.css`
+    const storage = this.getStorage()
+    const cssUrl = `${storage.baseUrl}/${currentRoom.get('slug')}.css`
 
-    return this.getStorage().saveStyles(
+    return storage.saveStyles(
       currentRoom.get('slug'),
       styles
     ).then((result) => {
