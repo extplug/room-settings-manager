@@ -40,6 +40,12 @@ export default class Storage {
       .then((response) => response.text())
   }
 
+  getHistory (room) {
+    return fetch(`${this.baseUrl}/${room}/history`)
+      .then(rejectNonOK)
+      .then((response) => response.json())
+  }
+
   saveSettings (room, settings) {
     return this.token.then((token) =>
       fetch(`${this.baseUrl}/${room}`, {

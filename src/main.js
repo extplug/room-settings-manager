@@ -5,6 +5,7 @@ import style from './style.css'
 import RoomSettingsMenuViewOverride from './RoomSettingsMenuView'
 import RoomStylesView from './RoomStylesView'
 import RulesSettingsView from './RulesSettingsView'
+import HistoryView from './HistoryView'
 import Storage from './Storage'
 import forceReload from './forceReload'
 
@@ -39,6 +40,11 @@ const RoomSettingsManager = Plugin.extend({
         roomSettingsView.view = new RulesSettingsView({
           roomSettings: this.ext.roomSettings,
           save: (fragment) => this.updateSettings(fragment)
+        })
+      }
+      if (section === 'extplug-history') {
+        roomSettingsView.view = new HistoryView({
+          load: () => this.getStorage().getHistory(currentRoom.get('slug'))
         })
       }
 

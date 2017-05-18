@@ -17,6 +17,12 @@ export default BaseView.extend({
         <i class="icon icon-locked"></i>
         <span class="label">Extension Rules</span>
       </div>
+    `, html`
+      <div class="item extplug-history" data-value="extplug-history"
+           onclick=${() => this.select('extplug-history')}>
+        <i class="icon icon-history-white"></i>
+        <span class="label">Room Settings History</span>
+      </div>
     `)
 
     this.$('.general').on('click', () => this.select('general'))
