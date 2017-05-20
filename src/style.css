@@ -3,6 +3,7 @@
 
 @import './RulesSettingsView.css';
 @import './RoomStylesView.css';
+@import './HistoryView.css';
 
 .CodeMirror {
   height: 100%;
