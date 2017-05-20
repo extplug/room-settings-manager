@@ -40,19 +40,3 @@
 .extp-RoomSettingsChange-description {
   color: #808691;
 }
-
-.extp-UserBadge {
-  height: 32px;
-  line-height: 32px;
-  display: inline-block;
-  cursor: pointer;
-  color: white;
-}
-
-.extp-UserBadge-img {
-  position: relative;
-}
-
-.extp-UserBadge-name {
-  margin-left: 36px;
-}

@@ -5,6 +5,7 @@
 @import './RoomStylesView.css';
 @import './HistoryView.css';
 @import './SaveLine.css';
+@import './UserBadge.css';
 
 .CodeMirror {
   height: 100%;
