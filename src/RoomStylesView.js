@@ -7,6 +7,7 @@ import SpinnerView from 'plug/views/spinner/SpinnerView'
 import request from 'extplug/util/request'
 import codemirror from './codemirror'
 import convertCssObject from './convertCssObject'
+import SaveLine from './SaveLine'
 
 const defaultText = stripIndent(`
   /* Add your CSS here! */
@@ -14,6 +15,8 @@ const defaultText = stripIndent(`
 
 export default View.extend({
   className: 'general-settings extp-RoomStylesView',
+
+  defaultMessage: 'Update room styles.',
 
   render () {
     this.spinner = new SpinnerView({ size: SpinnerView.LARGE })
@@ -26,17 +29,10 @@ export default View.extend({
       </div>
     `
 
-    this.button = html`
-      <button class="extp-Button" onclick=${() => this.save()}>
-        Save
-      </button>
-    `
-
-    this.$el.append(this.wrapper, html`
-      <div class="extp-RulesSettingsSaveLine extp-RoomStylesView-save">
-        ${this.button}
-      </div>
-    `)
+    this.$el.append(this.wrapper, SaveLine({
+      placeholder: this.defaultMessage,
+      onSave: () => this.save()
+    }))
 
     this.spinner.render()
 
@@ -82,9 +78,6 @@ export default View.extend({
 
     const styles = this.editor.getDoc().getValue()
 
-    this.button.setAttribute('disabled', 'disabled')
-    return this.options.save(styles).then(() => {
-      this.button.removeAttribute('disabled')
-    })
+    return this.options.save(styles)
   }
 })

@@ -3,10 +3,6 @@
     height: calc(100% - 59px); /* 100% - save button height */
   }
 
-  &-save {
-    margin: 10px;
-  }
-
   &-loading {
     position: relative;
     top: 50%;

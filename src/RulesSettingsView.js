@@ -1,6 +1,7 @@
 import { Model, View } from 'backbone'
 import html from 'bel'
 import lang from 'lang/Lang'
+import SaveLine from './SaveLine'
 
 const options = {
   allowAutowoot: 'Allow Autowoot',
@@ -50,21 +51,14 @@ export default View.extend({
         disable: () => this.disable(name)
       }))
 
-    this.button = html`
-      <button class="extp-Button" onclick=${() => this.save()}>
-        Save
-      </button>
-    `
-
     this.$el.empty().append(html`
       <div class="extp-RulesSettingsView">
         ${switches}
       </div>
-    `, html`
-      <div class="extp-RulesSettingsSaveLine">
-        ${this.button}
-      </div>
-    `)
+    `, SaveLine({
+      placeholder: 'Update rules.',
+      onSave: () => this.save()
+    }))
 
     return this
   },
@@ -78,12 +72,8 @@ export default View.extend({
   },
 
   save () {
-    this.button.setAttribute('disabled', 'disabled')
-
     return this.options.save({
       rules: this.rules.toJSON()
-    }).then(() => {
-      this.button.removeAttribute('disabled')
     })
   },
 
